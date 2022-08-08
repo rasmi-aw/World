@@ -15,6 +15,8 @@ public interface EntityDao<Entity> {
 
     Entity getWithId(Long id);
 
+    void save(Entity entity);
+
     void saveAll(List<Entity> entities);
 
     void deleteAll(List<Entity> entities);

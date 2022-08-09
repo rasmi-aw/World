@@ -1,7 +1,5 @@
 package com.beastwall.world.database.dao;
 
-import androidx.room.Query;
-
 import java.util.List;
 
 /**
@@ -13,8 +11,6 @@ public interface EntityDao<Entity> {
 
     List<Entity> getAll();
 
-    Entity getWithId(Long id);
-
     void save(Entity entity);
 
     void saveAll(List<Entity> entities);
@@ -22,6 +18,8 @@ public interface EntityDao<Entity> {
     void deleteAll(List<Entity> entities);
 
     void delete(Entity entity);
+
+    int getCount();
 
 
 }

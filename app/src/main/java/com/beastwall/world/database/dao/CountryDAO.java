@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.beastwall.world.database.model.CountryDB;
 
@@ -21,11 +22,11 @@ public interface CountryDAO extends EntityDao<CountryDB> {
     List<CountryDB> getAll();
 
     @Override
-    @Query("SELECT * FROM country where id = :id")
-    CountryDB getWithId(Long id);
+    @Update
+    void save(CountryDB countryDB);
 
     @Override
-    @Insert
+    @Update
     void saveAll(List<CountryDB> countryDBS);
 
     @Override
@@ -35,4 +36,8 @@ public interface CountryDAO extends EntityDao<CountryDB> {
     @Override
     @Delete
     void delete(CountryDB countryDB);
+
+    @Override
+    @Query("SELECT COUNT(*) FROM country")
+    int getCount();
 }

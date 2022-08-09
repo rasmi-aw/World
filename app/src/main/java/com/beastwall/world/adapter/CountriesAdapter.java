@@ -15,6 +15,7 @@ import com.beastwall.localisation.model.Country;
 import com.beastwall.localisation.model.complex_fields.Form;
 import com.beastwall.storagemanager.FileSaver;
 import com.beastwall.world.R;
+import com.beastwall.world.database.model.CountryDB;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGImageView;
 import com.caverock.androidsvg.SVGParseException;
@@ -27,9 +28,9 @@ import java.util.List;
  * @author AbdelWadoud Rasmi
  */
 public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.CountryHolder> {
-    public List<Country> countries;
+    public List<CountryDB> countries;
 
-    public CountriesAdapter(List<Country> countries) {
+    public CountriesAdapter(List<CountryDB> countries) {
         this.countries = countries;
     }
 
@@ -41,15 +42,15 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
 
     @Override
     public void onBindViewHolder(@NonNull CountryHolder holder, int position) {
-        Country country = countries.get(position);
+        CountryDB countryDB = countries.get(position);
+        Country country = countryDB.getCountry();
         holder.name.setText(country.getName());
         holder.nameNative.setText(country.getNativeL());
 
         new Thread(() -> {
-            byte[] dz = Localisation.getCountryFlagSVG(country.getIso2(), Form.SQUARE);
-            String path = FileSaver.get().save(dz, holder.itemView.getContext().getCacheDir().getPath(), country.getIso2() + ".svg");
+
             try {
-                SVG flag = SVG.getFromInputStream(new FileInputStream(path));
+                SVG flag = SVG.getFromInputStream(new FileInputStream(countryDB.getFlag()));
                 new Handler(Looper.getMainLooper()).post(() -> {
                     holder.flag.setSVG(flag);
 

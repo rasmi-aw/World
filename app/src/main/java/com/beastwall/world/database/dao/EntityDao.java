@@ -11,9 +11,11 @@ public interface EntityDao<Entity> {
 
     List<Entity> getAll();
 
-    void save(Entity entity);
+    void insert(Entity entity);
 
-    void saveAll(List<Entity> entities);
+    void update(Entity entity);
+
+    void updateAll(List<Entity> entities);
 
     void deleteAll(List<Entity> entities);
 

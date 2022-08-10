@@ -23,11 +23,15 @@ public interface CountryDAO extends EntityDao<CountryDB> {
 
     @Override
     @Insert
-    void save(CountryDB countryDB);
+    void insert(CountryDB countryDB);
 
     @Override
     @Update
-    void saveAll(List<CountryDB> countryDBS);
+    void update(CountryDB countryDB);
+
+    @Override
+    @Update
+    void updateAll(List<CountryDB> countryDBS);
 
     @Override
     @Delete

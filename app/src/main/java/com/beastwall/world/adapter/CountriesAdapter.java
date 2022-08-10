@@ -15,7 +15,10 @@ import com.beastwall.localisation.model.Country;
 import com.beastwall.localisation.model.complex_fields.Form;
 import com.beastwall.storagemanager.FileSaver;
 import com.beastwall.world.R;
+import com.beastwall.world.database.DataBase;
+import com.beastwall.world.database.SQLITEDatabase;
 import com.beastwall.world.database.model.CountryDB;
+import com.beastwall.world.fetcher.DisplayFlagTask;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGImageView;
 import com.caverock.androidsvg.SVGParseException;
@@ -46,23 +49,10 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
         Country country = countryDB.getCountry();
         holder.name.setText(country.getName());
         holder.nameNative.setText(country.getNativeL());
-
-        if (countryDB.getFlag() != null)
-            new Thread(() -> {
-
-                try {
-                    SVG flag = SVG.getFromInputStream(new FileInputStream(countryDB.getFlag()));
-                    new Handler(Looper.getMainLooper()).post(() -> {
-                        holder.flag.setSVG(flag);
-
-                    });
-                } catch (SVGParseException e) {
-                    e.printStackTrace();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-            }).start();
+        //
+        DisplayFlagTask
+                .get(holder.flag, DataBase.get(holder.flag.getContext()))
+                .start(countryDB);
 
     }
 

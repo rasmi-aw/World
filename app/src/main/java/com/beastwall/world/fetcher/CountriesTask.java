@@ -42,7 +42,7 @@ public abstract class CountriesTask extends BackgroundTask<String, List<CountryD
             for (Country c : countries) {
                 CountryDB current = new CountryDB(c, null);
                 countryDBS.add(current);
-                countryDAO.save(current);
+                countryDAO.insert(current);
             }
         else
             countryDBS = countryDAO.getAll();

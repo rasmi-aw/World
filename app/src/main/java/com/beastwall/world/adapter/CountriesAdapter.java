@@ -47,21 +47,22 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
         holder.name.setText(country.getName());
         holder.nameNative.setText(country.getNativeL());
 
-        new Thread(() -> {
+        if (countryDB.getFlag() != null)
+            new Thread(() -> {
 
-            try {
-                SVG flag = SVG.getFromInputStream(new FileInputStream(countryDB.getFlag()));
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    holder.flag.setSVG(flag);
+                try {
+                    SVG flag = SVG.getFromInputStream(new FileInputStream(countryDB.getFlag()));
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        holder.flag.setSVG(flag);
 
-                });
-            } catch (SVGParseException e) {
-                e.printStackTrace();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+                    });
+                } catch (SVGParseException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
 
-        }).start();
+            }).start();
 
     }
 

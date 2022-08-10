@@ -31,7 +31,7 @@ public class FragmentActivity extends AppCompatActivity {
         fragmentTransaction.replace(layout, fragment);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         if (backStack)
-            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.addToBackStack(fragment.getTag());
         fragmentTransaction.commit();
     }
 

@@ -2,6 +2,7 @@ package com.beastwall.world.fetcher;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.beastwall.localisation.Localisation;
 import com.beastwall.localisation.model.Country;
@@ -20,7 +21,7 @@ import java.util.List;
  * <p>
  * A task to fetch al countries
  */
-public abstract class  CountriesTask extends BackgroundTask<String, List<CountryDB>> {
+public abstract class CountriesTask extends BackgroundTask<String, List<CountryDB>> {
     private SQLITEDatabase db;
 
     public CountriesTask(SQLITEDatabase db) {
@@ -30,16 +31,22 @@ public abstract class  CountriesTask extends BackgroundTask<String, List<Country
     @Override
     public List<CountryDB> doInBackground(String parentDir) {
         List<CountryDB> countryDBS = new ArrayList<>();
-        List<Country> countries = Localisation.getAllCountriesStatesAndCities();
         CountryDAO countryDAO = db.countryDAO();
+        //Checking is there's countries in db
+        List<Country> countries;
+        if (countryDAO.getCount() < 1)
+            countries = Localisation.getAllCountriesStatesAndCities();
+        else countries = new ArrayList<>();
         //
-        for (Country c : countries) {
-            byte[] dz = Localisation.getCountryFlagSVG(c.getIso2(), Form.SQUARE);
-            String path = FileSaver.get().save(dz, parentDir, c.getIso2() + ".svg");
-            CountryDB current = new CountryDB(c, path);
-            countryDBS.add(current);
-            countryDAO.save(current);
-        }
+        if (!countries.isEmpty())
+            for (Country c : countries) {
+                CountryDB current = new CountryDB(c, null);
+                countryDBS.add(current);
+                countryDAO.save(current);
+            }
+        else
+            countryDBS = countryDAO.getAll();
+
         return countryDBS;
     }
 

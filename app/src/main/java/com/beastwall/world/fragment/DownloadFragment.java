@@ -57,7 +57,7 @@ public class DownloadFragment extends Fragment {
         new CountriesTask(db) {
             @Override
             public void doInMainThread(List<CountryDB> countryDBS) {
-                ((MainActivity) getActivity()).displ
+                ((MainActivity) getActivity()).displayFragment(CountriesFragment.newInstance(countryDBS), R.id.main_container, false);
             }
 
             @Override

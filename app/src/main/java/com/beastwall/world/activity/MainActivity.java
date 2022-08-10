@@ -19,6 +19,8 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         //
         db = DataBase.get(this);
+
+        //display main content
         displayFragment(DownloadFragment.newInstance(db), R.id.main_container, false);
 
     }

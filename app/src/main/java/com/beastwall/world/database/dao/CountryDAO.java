@@ -22,7 +22,7 @@ public interface CountryDAO extends EntityDao<CountryDB> {
     List<CountryDB> getAll();
 
     @Override
-    @Update
+    @Insert
     void save(CountryDB countryDB);
 
     @Override

@@ -46,7 +46,8 @@ public class StatesAdapter extends RecyclerView.Adapter<StatesAdapter.StateHolde
     /**
      * StateHolder
      */
-    public class StateHolder extends RecyclerView.ViewHolder {
+    public static class StateHolder extends RecyclerView.ViewHolder {
+        private static View.OnClickListener clickListener;
         public TextView name;
 
         public StateHolder(@NonNull View itemView) {
@@ -55,4 +56,7 @@ public class StatesAdapter extends RecyclerView.Adapter<StatesAdapter.StateHolde
             name = itemView.findViewById(R.id.name);
         }
     }
+
+
+
 }

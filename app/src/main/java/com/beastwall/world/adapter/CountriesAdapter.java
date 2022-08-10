@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +24,8 @@ import java.util.List;
  * @author AbdelWadoud Rasmi
  */
 public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.CountryHolder> {
-    public List<CountryDB> countries;
+    private List<CountryDB> countries;
+
 
     public CountriesAdapter(List<CountryDB> countries) {
         this.countries = countries;
@@ -58,12 +60,18 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
         return countries == null ? 0 : countries.size();
     }
 
-    public static class CountryHolder extends RecyclerView.ViewHolder {
+    public  class CountryHolder extends RecyclerView.ViewHolder {
         public TextView name, nameNative;
         public SVGImageView flag;
 
         public CountryHolder(@NonNull View itemView) {
             super(itemView);
+
+            //
+            itemView.setOnClickListener( view -> Toast.makeText(view.getContext(),
+                    countries.get(getBindingAdapterPosition()).getCountry().getName(),
+                    Toast.LENGTH_SHORT).show());
+            //
             name = itemView.findViewById(R.id.name);
             nameNative = itemView.findViewById(R.id.name_native);
             flag = itemView.findViewById(R.id.flag);

@@ -11,12 +11,14 @@ import com.beastwall.world.fragment.DownloadFragment;
  * @author Abdel Wadoud Rasmi
  */
 public class MainActivity extends FragmentActivity {
+    public static MainActivity instance;
     private SQLITEDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        instance = this;
         //
         db = DataBase.get(this);
 

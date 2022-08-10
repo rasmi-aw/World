@@ -20,7 +20,6 @@ import com.beastwall.world.adapter.StatesAdapter;
  * @author AbdelWadoud Rasmi
  */
 public class StatesFragment extends Fragment {
-    private static StatesFragment instance;
     private Country country;
     public RecyclerView recyclerView;
 
@@ -32,10 +31,7 @@ public class StatesFragment extends Fragment {
      * get Instance
      */
     public static StatesFragment getInstance(Country country) {
-        if (instance == null) {
-            instance = new StatesFragment(country);
-        }
-        return instance;
+        return new StatesFragment(country);
     }
 
     @Override

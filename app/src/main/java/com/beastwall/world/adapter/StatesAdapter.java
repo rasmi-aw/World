@@ -1,5 +1,6 @@
 package com.beastwall.world.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class StatesAdapter extends RecyclerView.Adapter<StatesAdapter.StateHolde
 
     public StatesAdapter(List<State> states) {
         this.states = states;
+        Log.v("rasmi",""+states.size());
     }
 
     @NonNull
@@ -47,7 +49,6 @@ public class StatesAdapter extends RecyclerView.Adapter<StatesAdapter.StateHolde
      * StateHolder
      */
     public static class StateHolder extends RecyclerView.ViewHolder {
-        private static View.OnClickListener clickListener;
         public TextView name;
 
         public StateHolder(@NonNull View itemView) {

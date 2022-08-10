@@ -9,9 +9,10 @@ import androidx.room.Room;
  * plays the role of a singleton db manager
  */
 public class DataBase {
-    public static SQLITEDatabase database;
+    private static SQLITEDatabase database;
 
-    private DataBase(){};
+    private DataBase() {
+    }
 
     public static SQLITEDatabase get(Context context) {
         if (database == null)

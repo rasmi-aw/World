@@ -1,7 +1,5 @@
 package com.beastwall.world.adapter;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,21 +8,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.beastwall.localisation.Localisation;
 import com.beastwall.localisation.model.Country;
-import com.beastwall.localisation.model.complex_fields.Form;
-import com.beastwall.storagemanager.FileSaver;
 import com.beastwall.world.R;
+import com.beastwall.world.cache.SVGCache;
 import com.beastwall.world.database.DataBase;
-import com.beastwall.world.database.SQLITEDatabase;
 import com.beastwall.world.database.model.CountryDB;
 import com.beastwall.world.fetcher.DisplayFlagTask;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGImageView;
-import com.caverock.androidsvg.SVGParseException;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -50,9 +42,14 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
         holder.name.setText(country.getName());
         holder.nameNative.setText(country.getNativeL());
         //
-        DisplayFlagTask
-                .get(holder.flag, DataBase.get(holder.flag.getContext()))
-                .start(countryDB);
+        SVG svg = SVGCache.getInstance().get(countryDB.getFlag());
+        //
+        if (svg != null)
+            holder.flag.setSVG(svg);
+        else
+            DisplayFlagTask
+                    .get(holder.flag, DataBase.get(holder.flag.getContext()))
+                    .start(countryDB);
 
     }
 

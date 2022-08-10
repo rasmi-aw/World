@@ -1,9 +1,12 @@
 package com.beastwall.world.fetcher;
 
+import android.util.Log;
+
 import com.beastwall.localisation.Localisation;
 import com.beastwall.localisation.model.complex_fields.Form;
 import com.beastwall.storagemanager.FileSaver;
 import com.beastwall.storagemanager.utils.StorageUtils;
+import com.beastwall.world.cache.SVGCache;
 import com.beastwall.world.database.SQLITEDatabase;
 import com.beastwall.world.database.model.CountryDB;
 import com.caverock.androidsvg.SVG;
@@ -35,7 +38,9 @@ public class DisplayFlagTask extends BackgroundTask<CountryDB, SVG> {
         if (StorageUtils.isStoredLocally(country.getFlag())) {
             //Case when the file is already saved locally
             try {
-                return SVG.getFromInputStream(new FileInputStream(country.getFlag()));
+                SVG svg = SVG.getFromInputStream(new FileInputStream(country.getFlag()));
+                SVGCache.getInstance().put(country.getFlag(), svg);
+                return svg;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -46,7 +51,9 @@ public class DisplayFlagTask extends BackgroundTask<CountryDB, SVG> {
             country.setFlag(path);
             db.countryDAO().update(country);
             try {
-                return SVG.getFromInputStream(new FileInputStream(country.getFlag()));
+                SVG svg = SVG.getFromInputStream(new FileInputStream(country.getFlag()));
+                SVGCache.getInstance().put(country.getFlag(), svg);
+                return svg;
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -45,5 +45,6 @@ public class CountryDB {
 
     public CountryDB(Country country, String flag) {
         this.country = country;
+        this.flag = flag;
     }
 }
